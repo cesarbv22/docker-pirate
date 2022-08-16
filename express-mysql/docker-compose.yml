@@ -1,10 +1,10 @@
 version: "3.8"
 
 services:
-  express_rest_api:
+  express_rest_api: # Container donde estará la aplicación
     container_name: my_express_rest_api
-    build: ./app/
-    environment:
+    build: ./app/ #Este container se va a crear apartir de un dockerfile que está en la carpeta app
+    environment: #Configuraciones asociadas  con variables de entorno
       - DB_PORT=3306
       - DB_HOST=mysql_db
     ports:
@@ -14,17 +14,18 @@ services:
     networks:
       - docker_pirate_net
     restart: on-failure
-    deploy:
+    deploy: #limitación de recursos 
       resources:
         limits:
           memory: 1G
-  mysql_db:
+  mysql_db: #Container de la base de datos, es el nombre (del servicio) que se usará para conectarse
     container_name: my_mysql_db
-    image: mysql:latest
+    image: mysql:latest #En este caso este container se va a crear a partir de la imagen que se ve en Docker hub
     # Important command to allow legacy authentications for old versions
-    command: --default-authentication-plugin=mysql_native_password
+    command: --default-authentication-plugin=mysql_native_password # el command es una forma de ejecutar un comando cuando
+    # se inicializa un container, se usa mucho para trabajar con credenciales en MySQL 
     restart: always
-    environment:
+    environment: #configuraciones con variables de entorno, en este caso son la DB y sus credenciales
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: employees
@@ -32,9 +33,9 @@ services:
       - "3306"
     ports:
       - "3306:3306"
-    volumes:
+    volumes: # los volúmenes son la forma de mantener los datos desde local al container y al revés
       - docker_pirate_mysql_db_volume:/var/lib/mysql
-      - ./db:/docker-entrypoint-initdb.d
+      - ./db:/docker-entrypoint-initdb.d #este path */db señala a mi carpeta db, que está al mismo nivel de app
     networks:
       - docker_pirate_net
     deploy:
