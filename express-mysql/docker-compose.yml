@@ -51,3 +51,4 @@ networks:
   docker_pirate_net:
     driver: bridge
     name: docker_pirate_net
+#https://www.youtube.com/watch?v=PdYLiekL834&list=PLyTv82e1M2ifx3zHOrurVDdNUf9UzPxhx&index=10
