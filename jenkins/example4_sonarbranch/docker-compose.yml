@@ -30,7 +30,7 @@ services:
     container_name: my_custom_sonarqube
     # build: ./sonarqube_home
     #image: sonarqube:7.9.5-community
-    image: mc1arke/sonarqube-with-community-branch-plugin:lts
+    image: mc1arke/sonarqube-with-community-branch-plugin:8.9-community
     environment:
       SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
       #SONARQUBE_USERNAME: admin
