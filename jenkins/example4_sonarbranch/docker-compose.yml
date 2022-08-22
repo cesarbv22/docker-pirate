@@ -6,7 +6,7 @@ services:
     image: jenkins/jenkins:lts
     user: root
     environment:
-      MY_NAME: "santi_devops"
+     #MY_NAME: "santi_devops"
       # Gmail extra configuration for mailer plugin
       JAVA_OPTS: "-Djava.awt.headless=true -Dmail.smtp.starttls.enable=true"
       SONARQUBE_HOST:  #Nombre del servicio
