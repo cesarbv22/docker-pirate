@@ -1,4 +1,4 @@
-FROM node
+FROM node as build
 
 # Define default ports and host for app and db, mysql_db es el nombre del servicio en el docker compose 
 ARG app_port=3000
