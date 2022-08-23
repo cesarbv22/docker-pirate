@@ -6,17 +6,17 @@ services:
     image: jenkins/jenkins:lts
     user: root
     environment:
-     #MY_NAME: "santi_devops"
+      MY_NAME: "test_devops"
       # Gmail extra configuration for mailer plugin
       JAVA_OPTS: "-Djava.awt.headless=true -Dmail.smtp.starttls.enable=true"
-      SONARQUBE_HOST:  #Nombre del servicio
-    ports:
+      SONARQUBE_HOST: mysonarqube #Nombre del servicio de sonarquebe
+    ports: #puerto local:puerto del container
       - "8080:8080"
       - "50000:50000"
     volumes:
-      # Named  Docker volume details at the bottom
+      # volumen de jenkins
       - jenkins_home:/var/jenkins_home
-      # WARNING:
+      # WARNING: volumen que conecta el soquet de docker local con el soquet del container, para correr DinD 
       - /var/run/docker.sock:/var/run/docker.sock
     restart: always
     networks:
@@ -48,7 +48,8 @@ services:
       - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions 
-      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+      - sonarqube_logs:/opt/sonarqube/logs
+     # - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
     restart: unless-stopped
     #restart: always
     deploy:
@@ -67,9 +68,11 @@ volumes:
    name: "custom_sonarqube_data"
   sonarqube_extensions:
     name: "custom_sonarqube_extensions"
+  sonarqube_logs:
+    name: "custom_sonarqube_logs"
 
-  sonarqube_bundled-plugins:
-    name: "custom_sonarqube_bundled-plugins"
+  # sonarqube_bundled-plugins:
+  #   name: "custom_sonarqube_bundled-plugins"
 
 networks:
   net_devops:
