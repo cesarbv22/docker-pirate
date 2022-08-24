@@ -32,6 +32,7 @@ services:
     image: sonarqube:7.9.5-community
     #image: mc1arke/sonarqube-with-community-branch-plugin:8.9-community
     #image: sonarqube:8.9.9-community
+    #user: root #descomentar para instalar el ping
     environment:
       SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
       #SONARQUBE_USERNAME: admin

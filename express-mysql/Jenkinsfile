@@ -8,21 +8,27 @@ def qualityGateValidation(qg) {
   return false
 }
 pipeline {
-  agent any
+  agent any //Usa cualquier agente en el pipeline 
 
-  tools {
+  tools { // para todo el proceso se usa la herramienta de nodeJS, forma de usar el plugin de nodeJs (de jenkins), en jenkinsfile
       nodejs 'nodejs'
   }
 
-  environment {
+  environment {//
       // General Variables for Pipeline
-      PROJECT_ROOT = 'express-mysql/app'
+      PROJECT_ROOT = 'express-mysql/app'// hace referencia a donde se encuentra el root del proyecto, es donde esta la aplicacion
       EMAIL_ADDRESS = 'san99tiagodevsecops@gmail.com'
-      REGISTRY = 'san99tiago/docker-pirate-express'
+      //REGISTRY = 'san99tiago/docker-pirate-express'// es como la convención para el nombre de la imagen
+      ////usuario docker/nombre de nuestra imagen
+      REGISTRY = 'cesarbv/docker-pirate-express'
+      /*
+      ESTRUCTURA DE LAS IMAGENES EN SU NOMBRE 
+        RegistryName/folderName/NFolderName/imageName:tag
+      */
   }
 
   stages {
-      stage('Hello') {
+      stage('Hello') { //Imprime mensajes para ver si jenkins file funca
         steps {
           // First stage is a sample hello-world step to verify correct Jenkins Pipeline
           echo 'Hello World, I am Happy'
@@ -32,15 +38,17 @@ pipeline {
       stage('Checkout') {
         steps {
         // Get Github repo using Github credentials (previously added to Jenkins credentials)
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/san99tiago/docker-pirate']]])        }
+        //checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/san99tiago/docker-pirate']]])        }
+        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cesarbv22/docker-pirate.git']]])
+               }
       }
-      stage('Install dependencies') {
+      stage('Install dependencies') {//acá se configuran las dependencias de nodeJs
         steps {
           sh 'npm --version'
-          sh "cd ${PROJECT_ROOT}; npm install"
+          sh "cd ${PROJECT_ROOT}; npm install" //nos dirigimos a la ruta del proyecto y ahi se corre el npm install
         }
       }
-      stage('Unit tests') {
+      stage('Unit tests') {// dos dirigimos a la ruta del proyecto y ahi ejecutamos las pruebas unitarias 
         steps {
           // Run unit tests
           sh "cd ${PROJECT_ROOT}; npm run test"
@@ -53,13 +61,13 @@ pipeline {
         }
       }
       stage('scan') {
-          environment {
+          environment {//variable de entorno
             // Previously defined in the Jenkins "Global Tool Configuration"
-            scannerHome = tool 'sonar-scanner'
+            scannerHome = tool 'sonar-scanner' //sonar-scanner es el nombre que se puso cuando se configuró el plugin en jenkins
           }
           steps {
             // "sonarqube" is the server configured in "Configure System"
-            withSonarQubeEnv('sonarqube') {
+            withSonarQubeEnv('sonarqube') {// sonarqube, es el nombre del sonarqube server que se configuró
               // Execute the SonarQube scanner with desired flags
               sh "${scannerHome}/bin/sonar-scanner \
                           -Dsonar.projectKey=SimpleExpressExample:Test \
