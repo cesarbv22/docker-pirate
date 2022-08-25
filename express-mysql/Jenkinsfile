@@ -89,7 +89,7 @@ pipeline {
       stage('Build docker-image') { //empaquetar la aplicacion en el path especifico
         steps {
            //sh "cd ./${PROJECT_ROOT};docker build -t ${REGISTRY}:${BUILD_NUMBER} . "
-          echo 'Hello World, I am Happy'+${BUILD_NUMBER}
+          echo 'BUILD Docker image echo'
         }
       }
       stage('Deploy docker-image') {
@@ -97,7 +97,7 @@ pipeline {
           // // If the Dockerhub authentication stopped, do it again
           //  sh 'docker login'
           //  sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
-          echo 'Hello World, I am Happy'+${BUILD_NUMBER}
+          echo 'DEPLOY DOCKER IMAGE'
         }
       }
   }
