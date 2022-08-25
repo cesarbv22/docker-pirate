@@ -14,6 +14,14 @@ pipeline {
       nodejs 'nodejs'
   }
 
+ parameters {
+    string(name: 'container_name', defaultValue: 'pagina_web', description: 'Nombre del contenedor de docker.')
+    string(name: 'image_name', defaultValue: 'pagina_img', description: 'Nombre de la imagene docker.')
+    string(name: 'tag_image', defaultValue: 'lts', description: 'Tag de la imagen de la página.')
+    string(name: 'container_port', defaultValue: '80', description: 'Puerto que usa el contenedor')
+  }
+
+
   environment {//
       // General Variables for Pipeline
       PROJECT_ROOT = 'express-mysql/app'// hace referencia a donde se encuentra el root del proyecto, es donde esta la aplicacion
@@ -88,16 +96,16 @@ pipeline {
       }
       stage('Build docker-image') { //empaquetar la aplicacion en el path especifico
         steps {
-           sh "cd ./${PROJECT_ROOT};docker build -t ${REGISTRY}:${40} . "
-          //echo 'BUILD Docker image echo'
+           //sh "cd ./${PROJECT_ROOT};docker build -t ${REGISTRY}:${BUILD_NUMBER} . "
+          echo 'construir imagen con docker'
         }
       }
       stage('Deploy docker-image') {
         steps {
           // // If the Dockerhub authentication stopped, do it again
-            sh 'docker login'
-            sh "docker push ${REGISTRY}:${40}"
-          //echo 'DEPLOY DOCKER IMAGE'
+          //  sh 'docker login'
+          //  sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
+         echo 'despliegue'
         }
       }
   }
