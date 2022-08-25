@@ -96,8 +96,8 @@ pipeline {
       }
       stage('Build docker-image') { //empaquetar la aplicacion en el path especifico
         steps {
-           //sh "cd ./${PROJECT_ROOT};docker build -t ${REGISTRY}:${BUILD_NUMBER} . "
-          echo 'construir imagen con docker'
+           sh "cd ./${PROJECT_ROOT};docker build -t ${REGISTRY}:${BUILD_NUMBER} . "
+          //echo 'construir imagen con docker'
         }
       }
       stage('Deploy docker-image') {
