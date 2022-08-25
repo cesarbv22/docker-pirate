@@ -1,5 +1,5 @@
-FROM node as build
-
+#Stage 1
+FROM node as base
 # Define default ports and host for app and db, mysql_db es el nombre del servicio en el docker compose 
 ARG app_port=3000
 ARG db_host=mysql_db
@@ -24,7 +24,8 @@ COPY ["app.js", "/usr/src/"]
 COPY ["./config/db.config.js", "/usr/src/config/"]
 COPY ["./db/model.js", "/usr/src/db/"]
 COPY ["./routes/developers.js", "/usr/src/routes/"]
-
+# hacer de aqui en adelante en otra stage
 EXPOSE ${app_port}
+#Esta linea va en el otro stage
+CMD ["node", "app.js"] 
 
-CMD ["node", "app.js"]
