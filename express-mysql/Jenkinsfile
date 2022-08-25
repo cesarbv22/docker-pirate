@@ -110,3 +110,7 @@ pipeline {
       }
   }
 }
+/*
+esta última versión funcionó porque hice el login tanto en el docker local, como en jenkins. Cuando eso pasa
+Ahora el build de jenkins reconoce que tengo parámetros y me los solicita en la sección de build del pipeline
+*/
