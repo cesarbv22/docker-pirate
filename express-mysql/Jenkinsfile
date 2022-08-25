@@ -88,16 +88,16 @@ pipeline {
       }
       stage('Build docker-image') { //empaquetar la aplicacion en el path especifico
         steps {
-           //sh "cd ./${PROJECT_ROOT};docker build -t ${REGISTRY}:${BUILD_NUMBER} . "
-          echo 'BUILD Docker image echo'
+           sh "cd ./${PROJECT_ROOT};docker build -t ${REGISTRY}:${40} . "
+          //echo 'BUILD Docker image echo'
         }
       }
       stage('Deploy docker-image') {
         steps {
           // // If the Dockerhub authentication stopped, do it again
-          //  sh 'docker login'
-          //  sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
-          echo 'DEPLOY DOCKER IMAGE'
+            sh 'docker login'
+            sh "docker push ${REGISTRY}:${40}"
+          //echo 'DEPLOY DOCKER IMAGE'
         }
       }
   }
