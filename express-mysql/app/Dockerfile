@@ -1,5 +1,5 @@
 #Stage 1 aca se define la imagen final que se usara
-FROM  node:slim as base
+FROM  node:alpine as base
 # Define default ports and host for app and db, mysql_db es el nombre del servicio en el docker compose 
 ARG app_port=3000
 ARG db_host=mysql_db
@@ -16,7 +16,7 @@ WORKDIR /usr/src
 COPY package*.json ./
 # Install node dependencies via npm
 RUN npm install && npm run build 
-FROM node:slim as deploy
+FROM node:alpine as deploy
 ENV NODE_ENV production
 # Add main app functionalities
 # COPY ["app.js", "/usr/src/"]
