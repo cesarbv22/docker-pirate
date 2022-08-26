@@ -8,7 +8,8 @@
     "nodemon": "nodemon app.js",
     "test": "mocha --exit",
     "coverage": "nyc --reporter=lcov npm run test",
-    "sonar": "node sonar-project.js"
+    "sonar": "node sonar-project.js",
+    "build": "npm build"
   },
   "nyc": {
     "exclude": "**/model.js"
