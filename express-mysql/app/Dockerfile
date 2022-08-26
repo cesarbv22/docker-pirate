@@ -16,6 +16,7 @@ WORKDIR /usr/src
 # Add dependencies for the node modules (to be installed)
 # Install node dependencies via npm
 RUN npm install && npm run build 
+COPY . .
 
 FROM node:alpine as deploy
 ENV NODE_ENV production
