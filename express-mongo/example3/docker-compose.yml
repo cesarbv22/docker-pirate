@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  myhelloapp:
+    build: .
+    environment:
+      MONGO_URL: "mongodb://mymongodb:27017/test"
+    depends_on:
+      - mymongodb
+    ports:
+      - "3000:3000"
+    volumes:
+      - example3_myhelloapp_volume:/usr/src
+
+  mymongodb:
+    image: mongo
+    volumes:
+      - example3_mymongodb_volume:/data/db
+
+volumes:
+  example3_myhelloapp_volume:
+    name: "example3_myhelloapp_volume"
+  example3_mymongodb_volume:
+    name: "example3_mymongodb_volume"
+
+networks:
+  default:
+    name: "example3_network"
