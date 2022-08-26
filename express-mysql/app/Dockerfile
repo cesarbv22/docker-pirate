@@ -8,14 +8,15 @@ ARG db_port=3306
 ENV APP_PORT=${app_port}
 ENV DB_HOST=${db_host}
 ENV DB_PORT=${db_port}
+#COPY ["package.json", "package-lock.json", "/usr/src/"]
+COPY package*.json ./
 # Specify working directory for the container
 WORKDIR /usr/src
 #WORKDIR /app
 # Add dependencies for the node modules (to be installed)
-#COPY ["package.json", "package-lock.json", "/usr/src/"]
-COPY package*.json ./
 # Install node dependencies via npm
 RUN npm install && npm run build 
+
 FROM node:alpine as deploy
 ENV NODE_ENV production
 # Add main app functionalities
