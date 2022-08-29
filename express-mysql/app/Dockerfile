@@ -23,7 +23,8 @@ RUN npm install && npm run rebuild
 COPY . .
 
 #Segunda stage
-FROM ${version} as deploy
+#FROM ${version} as deploy
+FROM base as deploy
 # Add main app functionalities
 # COPY ["app.js", "/usr/src/"]
 # COPY ["./config/db.config.js", "/usr/src/config/"]
