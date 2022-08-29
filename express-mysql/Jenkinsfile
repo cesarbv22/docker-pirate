@@ -17,7 +17,7 @@ pipeline {
   environment {//
       // General Variables for Pipeline
       PROJECT_ROOT = 'express-mysql/app'// hace referencia a donde se encuentra el root del proyecto, es donde esta la aplicacion
-      EMAIL_ADDRESS = 'san99tiagodevsecops@gmail.com'
+      //EMAIL_ADDRESS = 'san99tiagodevsecops@gmail.com'
       //REGISTRY = 'san99tiago/docker-pirate-express'// es como la convención para el nombre de la imagen
       ////usuario docker/nombre de nuestra imagen
       REGISTRY = 'cesarbv/docker-pirate-express'
