@@ -30,3 +30,4 @@ COPY . .
 EXPOSE ${app_port}
 #Esta linea va en el otro stage
 CMD ["node", "app.js"] 
+#docker-compose up --build se usa en la ruta de express-mysql
