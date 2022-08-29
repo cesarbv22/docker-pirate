@@ -1,6 +1,5 @@
 #Version de la imagen que se usa
 ARG version=node:alpine
-
 #Stage 1 aca se define la imagen final que se usara
 FROM  ${version} as base
 # Define default ports and host for app and db, mysql_db es el nombre del servicio en el docker compose 
@@ -12,6 +11,7 @@ ENV APP_PORT=${app_port}
 ENV DB_HOST=${db_host}
 ENV DB_PORT=${db_port}
 ENV imageVersion = ${version}
+ENV NODE_ENV production
 #COPY ["package.json", "package-lock.json", "/usr/src/"]
 COPY package*.json ./
 # Specify working directory for the container
@@ -24,7 +24,6 @@ COPY . .
 
 #Segunda stage
 FROM ${version} as deploy
-ENV NODE_ENV production
 # Add main app functionalities
 # COPY ["app.js", "/usr/src/"]
 # COPY ["./config/db.config.js", "/usr/src/config/"]
