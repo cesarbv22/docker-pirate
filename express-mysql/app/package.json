@@ -9,7 +9,7 @@
     "test": "mocha --exit",
     "coverage": "nyc --reporter=lcov npm run test",
     "sonar": "node sonar-project.js",
-    "build": "npm build"
+    "build":"npm rebuild"  
   },
   "nyc": {
     "exclude": "**/model.js"
