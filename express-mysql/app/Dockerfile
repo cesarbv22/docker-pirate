@@ -23,7 +23,7 @@ RUN npm install && npm run rebuild
 COPY . .
 
 #Segunda stage
-FROM $version as deploy
+FROM ${version} as deploy
 ENV NODE_ENV production
 # Add main app functionalities
 # COPY ["app.js", "/usr/src/"]
