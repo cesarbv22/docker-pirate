@@ -25,7 +25,7 @@ ENV NODE_ENV production
 # COPY ["./config/db.config.js", "/usr/src/config/"]
 # COPY ["./db/model.js", "/usr/src/db/"]
 # COPY ["./routes/developers.js", "/usr/src/routes/"]
-
+COPY . . 
 # hacer de aqui en adelante en otra stage
 EXPOSE ${app_port}
 #Esta linea va en el otro stage
