@@ -15,7 +15,7 @@ WORKDIR /usr/src
 #WORKDIR /app
 # Add dependencies for the node modules (to be installed)
 # Install node dependencies via npm
-RUN npm install && npm run build 
+RUN npm install && npm run rebuild 
 COPY . .
 
 FROM node:alpine as deploy
