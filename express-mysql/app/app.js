@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const app = express();// declaración de la aplicación y forma de usar API
 const router = require("./routes/developers.js");// dependencia que es equivalente a un controlador, permite redireccionar cuando
 //alguien haga los request y teniendo en cuenta que se redireccione a servicios, lógica de negocios o así. Es una importación de 
-//dependencias relativa, por el .
+//dependencias relativa, por el
 
 //configuración del puerto. Cuando tenga || quiere decir que está tratando de acceder a la variable de entorno o de lo contrario
 //el puerto 3000 
