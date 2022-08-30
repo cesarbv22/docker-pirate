@@ -39,7 +39,7 @@ pipeline {
         steps {
         // Get Github repo using Github credentials (previously added to Jenkins credentials)
         //checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/san99tiago/docker-pirate']]])        }
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cesarbv22/docker-pirate']]])
+            checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cesarbv22/docker-pirate']]])
                }
       }
       stage('Install dependencies') {//acá se configuran las dependencias de nodeJs
