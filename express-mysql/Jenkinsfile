@@ -198,14 +198,14 @@ pipeline{
 
         stage('Build Docker-image'){
             steps{
-                //buildProject(project_root:"${PROJECT_ROOT}",registry:"${REGISTRY}",build_number:"${BUILD_NUMBER}")
-               echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} Build Docker IMAGE"
+                buildProject(project_root:"${PROJECT_ROOT}",registry:"${REGISTRY}",build_number:"${BUILD_NUMBER}")
+               //echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} Build Docker IMAGE"
             }
         }
         stage('Deploy Docker-image'){
             steps{
-                //deployProject(project_root:"${PROJECT_ROOT}",build_number:"${BUILD_NUMBER}")
-                echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} DEPLOY IMAGE DOCKER"
+                deployProject(project_root:"${PROJECT_ROOT}",build_number:"${BUILD_NUMBER}")
+                //echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} DEPLOY IMAGE DOCKER"
             }
         }        
     }
