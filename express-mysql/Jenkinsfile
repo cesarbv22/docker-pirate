@@ -1,107 +1,107 @@
-// Function to validate that the message returned from SonarQube is ok
-def qualityGateValidation(qg) {
-  if (qg.status != 'OK') {
-    // emailext body: "WARNING SANTI: Code coverage is lower than 80% in Pipeline ${BUILD_NUMBER}", subject: 'Error Sonar Scan,   Quality Gate', to: "${EMAIL_ADDRESS}"
-    return true
-  }
-  // emailext body: "CONGRATS SANTI: Code coverage is higher than 80%  in Pipeline ${BUILD_NUMBER} - SUCCESS", subject: 'Info - Correct Pipeline', to: "${EMAIL_ADDRESS}"
-  return false
-}
-pipeline {
-  agent any //Usa cualquier agente en el pipeline 
+// // Function to validate that the message returned from SonarQube is ok
+// def qualityGateValidation(qg) {
+//   if (qg.status != 'OK') {
+//     // emailext body: "WARNING SANTI: Code coverage is lower than 80% in Pipeline ${BUILD_NUMBER}", subject: 'Error Sonar Scan,   Quality Gate', to: "${EMAIL_ADDRESS}"
+//     return true
+//   }
+//   // emailext body: "CONGRATS SANTI: Code coverage is higher than 80%  in Pipeline ${BUILD_NUMBER} - SUCCESS", subject: 'Info - Correct Pipeline', to: "${EMAIL_ADDRESS}"
+//   return false
+// }
+// pipeline {
+//   agent any //Usa cualquier agente en el pipeline 
 
-  tools { // para todo el proceso se usa la herramienta de nodeJS, forma de usar el plugin de nodeJs (de jenkins), en jenkinsfile
-      nodejs 'nodejs'
-  }
+//   tools { // para todo el proceso se usa la herramienta de nodeJS, forma de usar el plugin de nodeJs (de jenkins), en jenkinsfile
+//       nodejs 'nodejs'
+//   }
 
-  environment {//
-      // General Variables for Pipeline
-      PROJECT_ROOT = 'express-mysql/app'// hace referencia a donde se encuentra el root del proyecto, es donde esta la aplicacion
-      //EMAIL_ADDRESS = 'san99tiagodevsecops@gmail.com'
-      //REGISTRY = 'san99tiago/docker-pirate-express'// es como la convención para el nombre de la imagen
-      ////usuario docker/nombre de nuestra imagen
-      REGISTRY = 'cesarbv/docker-pirate-express'
-      /*
-      ESTRUCTURA DE LAS IMAGENES EN SU NOMBRE 
-        RegistryName/folderName/NFolderName/imageName:tag
-      */
-  }
+//   environment {//
+//       // General Variables for Pipeline
+//       PROJECT_ROOT = 'express-mysql/app'// hace referencia a donde se encuentra el root del proyecto, es donde esta la aplicacion
+//       //EMAIL_ADDRESS = 'san99tiagodevsecops@gmail.com'
+//       //REGISTRY = 'san99tiago/docker-pirate-express'// es como la convención para el nombre de la imagen
+//       ////usuario docker/nombre de nuestra imagen
+//       REGISTRY = 'cesarbv/docker-pirate-express'
+//       /*
+//       ESTRUCTURA DE LAS IMAGENES EN SU NOMBRE 
+//         RegistryName/folderName/NFolderName/imageName:tag
+//       */
+//   }
 
-  stages {
-      stage('Hello') { //Imprime mensajes para ver si jenkins file funca
-        steps {
-          // First stage is a sample hello-world step to verify correct Jenkins Pipeline
-          echo 'Hello World, I am Happy'
-          echo 'This is my amazing Pipeline'
-        }
-      }
-      stage('Checkout') {
-        steps {
-        // Get Github repo using Github credentials (previously added to Jenkins credentials)
-        //checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/san99tiago/docker-pirate']]])        }
-            checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cesarbv22/docker-pirate']]])
-               }
-      }
-      stage('Install dependencies') {//acá se configuran las dependencias de nodeJs
-        steps {
-          sh 'npm --version'
-          sh "cd ${PROJECT_ROOT}; npm install" //nos dirigimos a la ruta del proyecto y ahi se corre el npm install
-        }
-      }
-      stage('Unit tests') {// dos dirigimos a la ruta del proyecto y ahi ejecutamos las pruebas unitarias 
-        steps {
-          // Run unit tests
-          sh "cd ${PROJECT_ROOT}; npm run test"
-        }
-      }
-      stage('Generate coverage report') {
-        steps {
-          // Run code-coverage reports
-          sh "cd ${PROJECT_ROOT}; npm run coverage"
-        }
-      }
-      stage('scan') {
-          environment {//variable de entorno
-            // Previously defined in the Jenkins "Global Tool Configuration"
-            scannerHome = tool 'sonar-scanner' //sonar-scanner es el nombre que se puso cuando se configuró el plugin en jenkins
-          }
-          steps {
-            // "sonarqube" is the server configured in "Configure System"
-            withSonarQubeEnv('sonarqube') {// sonarqube, es el nombre del sonarqube server que se configuró
-              // Execute the SonarQube scanner with desired flags
-              sh "${scannerHome}/bin/sonar-scanner \
-                          -Dsonar.projectKey=SimpleExpressExample:Test \
-                          -Dsonar.projectName=SimpleExpressExample \
-                          -Dsonar.projectVersion=0.0.${BUILD_NUMBER} \
-                          -Dsonar.host.url=http://mysonarqube:9000 \
-                          -Dsonar.sources=./${PROJECT_ROOT}/app.js,./${PROJECT_ROOT}/config/db.config.js,./${PROJECT_ROOT}/routes/developers.js \
-                          -Dsonar.login=admin \
-                          -Dsonar.password=admin \
-                          -Dsonar.tests=./${PROJECT_ROOT}/test \
-                          -Dsonar.javascript.lcov.reportPaths=./${PROJECT_ROOT}/coverage/lcov.info"
-            }
-            timeout(time: 3, unit: 'MINUTES') {
-              // In case of SonarQube failure or direct timeout exceed, stop Pipeline
-              waitForQualityGate abortPipeline: qualityGateValidation(waitForQualityGate())
-            }
-          }
-      }
-      stage('Build docker-image') { //empaquetar la aplicacion en el path especifico
-        steps {
-           sh "cd ./${PROJECT_ROOT};docker build -t ${REGISTRY}:${BUILD_NUMBER} . "
-          //echo 'construir imagen con docker'
-        }
-      }
-      stage('Deploy docker-image') {
-        steps {
-          // // If the Dockerhub authentication stopped, do it again
-            sh 'docker login'
-            sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
-             echo 'despliegue'
-        }
-      }
-  }
-}
+//   stages {
+//       stage('Hello') { //Imprime mensajes para ver si jenkins file funca
+//         steps {
+//           // First stage is a sample hello-world step to verify correct Jenkins Pipeline
+//           echo 'Hello World, I am Happy'
+//           echo 'This is my amazing Pipeline'
+//         }
+//       }
+//       stage('Checkout') {
+//         steps {
+//         // Get Github repo using Github credentials (previously added to Jenkins credentials)
+//         //checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/san99tiago/docker-pirate']]])        }
+//             checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cesarbv22/docker-pirate']]])
+//                }
+//       }
+//       stage('Install dependencies') {//acá se configuran las dependencias de nodeJs
+//         steps {
+//           sh 'npm --version'
+//           sh "cd ${PROJECT_ROOT}; npm install" //nos dirigimos a la ruta del proyecto y ahi se corre el npm install
+//         }
+//       }
+//       stage('Unit tests') {// dos dirigimos a la ruta del proyecto y ahi ejecutamos las pruebas unitarias 
+//         steps {
+//           // Run unit tests
+//           sh "cd ${PROJECT_ROOT}; npm run test"
+//         }
+//       }
+//       stage('Generate coverage report') {
+//         steps {
+//           // Run code-coverage reports
+//           sh "cd ${PROJECT_ROOT}; npm run coverage"
+//         }
+//       }
+//       stage('scan') {
+//           environment {//variable de entorno
+//             // Previously defined in the Jenkins "Global Tool Configuration"
+//             scannerHome = tool 'sonar-scanner' //sonar-scanner es el nombre que se puso cuando se configuró el plugin en jenkins
+//           }
+//           steps {
+//             // "sonarqube" is the server configured in "Configure System"
+//             withSonarQubeEnv('sonarqube') {// sonarqube, es el nombre del sonarqube server que se configuró
+//               // Execute the SonarQube scanner with desired flags
+//               sh "${scannerHome}/bin/sonar-scanner \
+//                           -Dsonar.projectKey=SimpleExpressExample:Test \
+//                           -Dsonar.projectName=SimpleExpressExample \
+//                           -Dsonar.projectVersion=0.0.${BUILD_NUMBER} \
+//                           -Dsonar.host.url=http://mysonarqube:9000 \
+//                           -Dsonar.sources=./${PROJECT_ROOT}/app.js,./${PROJECT_ROOT}/config/db.config.js,./${PROJECT_ROOT}/routes/developers.js \
+//                           -Dsonar.login=admin \
+//                           -Dsonar.password=admin \
+//                           -Dsonar.tests=./${PROJECT_ROOT}/test \
+//                           -Dsonar.javascript.lcov.reportPaths=./${PROJECT_ROOT}/coverage/lcov.info"
+//             }
+//             timeout(time: 3, unit: 'MINUTES') {
+//               // In case of SonarQube failure or direct timeout exceed, stop Pipeline
+//               waitForQualityGate abortPipeline: qualityGateValidation(waitForQualityGate())
+//             }
+//           }
+//       }
+//       stage('Build docker-image') { //empaquetar la aplicacion en el path especifico
+//         steps {
+//            sh "cd ./${PROJECT_ROOT};docker build -t ${REGISTRY}:${BUILD_NUMBER} . "
+//           //echo 'construir imagen con docker'
+//         }
+//       }
+//       stage('Deploy docker-image') {
+//         steps {
+//           // // If the Dockerhub authentication stopped, do it again
+//             sh 'docker login'
+//             sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
+//              echo 'despliegue'
+//         }
+//       }
+//   }
+// }
 /*
 esta última versión funcionó porque hice el login tanto en el docker local, como en jenkins. Cuando eso pasa
 Ahora el build de jenkins reconoce que tengo parámetros y me los solicita en la sección de build del pipeline
@@ -111,3 +111,100 @@ COMANDO USADO PARA CREAR LA IMAGEN: docker run -it -d -p 3000:3000 --name prueba
 work dir en jenkins
 automatizar login
 */
+
+
+//PRUEBA DE SHARED LIBRARY JENKINS MY JENKINS FILE
+@Library("shared-library") _
+def qualityGateValidation(qg) {
+  if (qg.status != 'OK') {
+    // emailext body: "WARNING SANTI: Code coverage is lower than 80% in Pipeline ${BUILD_NUMBER}", subject: 'Error Sonar Scan,   Quality Gate', to: "${EMAIL_ADDRESS}"
+    return true
+  }
+  // emailext body: "CONGRATS SANTI: Code coverage is higher than 80%  in Pipeline ${BUILD_NUMBER} - SUCCESS", subject: 'Info - Correct Pipeline', to: "${EMAIL_ADDRESS}"
+  return false
+}
+pipeline{
+    agent any
+
+    tools{
+        nodejs 'nodejs'
+    }
+
+    environment {//
+      PROJECT_ROOT = 'express-mysql/app'
+      REGISTRY = 'cesarbv/docker-pirate-express'
+      /*
+      ESTRUCTURA DE LAS IMAGENES EN SU NOMBRE 
+        RegistryName/folderName/NFolderName/imageName:tag
+      */
+    }
+
+    stages{ // stage 1 de ejemplo
+        stage('example'){
+            steps {
+              helloworld(day:"martes",name:"Marshall")
+            }
+        }
+
+         stage('Hello'){
+            steps {
+              hello()
+            }
+        }
+
+        stage('Checkout'){// este no estoy tan seguro de como adaptarlo
+            steps{
+              //   checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cesarbv22/docker-pirate']]])
+              checkProject()
+            }
+        }
+
+        stage('Install Dependencies'){
+            steps{
+               // installDependencies(project_root: PROJECT_ROOT)// aqui iria la variable de enntorno
+              echo "${PROJECT_ROOT} Instalar dependencias"
+            }
+        }
+         stage('Unit test'){
+            steps{
+                //unitTest(project_root: PROJECT_ROOT)// poner la ruta en variable
+                echo "${PROJECT_ROOT} Pruebas unitarias"
+            }
+        }
+         stage('Generate coverage report'){
+            steps{
+                //coverageProject(project_root: PROJECT_ROOT)
+                echo "${PROJECT_ROOT} Run coverage"
+            }
+        }
+
+         stage('Scan'){
+             environment {//variable de entorno
+                scannerHome = tool 'sonar-scanner' //sonar-scanner es el nombre que se puso cuando se configuró el plugin en jenkins
+            }
+            steps{
+                // withSonarQubeEnv('sonarqube') {
+                //     scanningProject(scannerHome:"${scannerHome}",buildNumber:"${BUILD_NUMBER}",project_root: "${PROJECT_ROOT}" )
+                // }
+                // timeout(time: 3, unit: 'MINUTES') {
+             
+                //     waitForQualityGate abortPipeline: qualityGateValidation(waitForQualityGate())
+                // }
+                 echo "${scannerHome}-- ${BUILD_NUMBER}--- ${PROJECT_ROOT} Scaneo"
+            }
+        }
+
+        stage('Build Docker-image'){
+            steps{
+               // buildProject(project_root:"${PROJECT_ROOT}",registry:"${REGISTRY}",build_number:"${BUILD_NUMBER}")
+               echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} Build Docker IMAGE"
+            }
+        }
+        stage('Deploy Docker-image'){
+            steps{
+                //deployProject(project_root:"${PROJECT_ROOT}",build_number:"${BUILD_NUMBER}")
+                echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} DEPLOY IMAGE DOCKER"
+            }
+        }        
+    }
+}
