@@ -185,28 +185,28 @@ pipeline{
                 scannerHome = tool 'sonar-scanner' //sonar-scanner es el nombre que se puso cuando se configuró el plugin en jenkins
             }
             steps{
-                withSonarQubeEnv('sonarqube') {
-                    scanningProject(scannerHome:"${scannerHome}",buildNumber:"${BUILD_NUMBER}",project_root: "${PROJECT_ROOT}" )
-                }
-                timeout(time: 3, unit: 'MINUTES') {
+                // withSonarQubeEnv('sonarqube') {
+                //     scanningProject(scannerHome:"${scannerHome}",buildNumber:"${BUILD_NUMBER}",project_root: "${PROJECT_ROOT}" )
+                // }
+                // timeout(time: 3, unit: 'MINUTES') {
              
-                    waitForQualityGate abortPipeline: qualityGateValidation(waitForQualityGate())
-                }
-                 //echo "${scannerHome}-- ${BUILD_NUMBER}--- ${PROJECT_ROOT} Scaneo"
+                //     waitForQualityGate abortPipeline: qualityGateValidation(waitForQualityGate())
+                // }
+                 echo "${scannerHome}-- ${BUILD_NUMBER}--- ${PROJECT_ROOT} Scaneo"
             }
         }
 
         stage('Build Docker-image'){
             steps{
-                buildProject(project_root:"${PROJECT_ROOT}",registry:"${REGISTRY}",build_number:"${BUILD_NUMBER}")
-               //echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} Build Docker IMAGE"
+                //buildProject(project_root:"${PROJECT_ROOT}",registry:"${REGISTRY}",build_number:"${BUILD_NUMBER}")
+               echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} Build Docker IMAGE"
             }
         }
-        // stage('Deploy Docker-image'){
-        //     steps{
-        //         deployProject(project_root:"${PROJECT_ROOT}",build_number:"${BUILD_NUMBER}")
-        //         //echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} DEPLOY IMAGE DOCKER"
-        //     }
-        // }        
+        stage('Deploy Docker-image'){
+            steps{
+                //deployProject(project_root:"${PROJECT_ROOT}",build_number:"${BUILD_NUMBER}")
+                echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} DEPLOY IMAGE DOCKER"
+            }
+        }        
     }
 }
