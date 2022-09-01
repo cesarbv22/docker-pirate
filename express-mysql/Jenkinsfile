@@ -160,8 +160,8 @@ pipeline{
 
         stage('Install Dependencies'){
             steps{
-               // installDependencies(project_root: PROJECT_ROOT)// aqui iria la variable de enntorno
-              echo "${PROJECT_ROOT} Instalar dependencias"
+                installDependencies(project_root: PROJECT_ROOT)// aqui iria la variable de enntorno
+              //echo "${PROJECT_ROOT} Instalar dependencias"
             }
         }
          stage('Unit test'){
@@ -172,8 +172,8 @@ pipeline{
         }
          stage('Generate coverage report'){
             steps{
-                //coverageProject(project_root: PROJECT_ROOT)
-                echo "${PROJECT_ROOT} Run coverage"
+                coverageProject(project_root: PROJECT_ROOT)
+                //echo "${PROJECT_ROOT} Run coverage"
             }
         }
 
@@ -206,8 +206,8 @@ pipeline{
             steps{
                 //deployProject(project_root:"${PROJECT_ROOT}",build_number:"${BUILD_NUMBER}")
                 //echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} DEPLOY IMAGE DOCKER"
-                 sh 'docker login'
-                 sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
+                // sh 'docker login'
+               //  sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
             }
         }        
     }
