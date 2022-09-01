@@ -69,7 +69,6 @@ pipeline{
                     escaneo(homeScanner:"${scannerHome}",buildNumber:"${BUILD_NUMBER}",project_root: "${PROJECT_ROOT}" )
                 }
                 timeout(time: 3, unit: 'MINUTES') {
-             
                     waitForQualityGate abortPipeline: qualityGateValidation(waitForQualityGate())
                 }
                 
@@ -78,7 +77,7 @@ pipeline{
 
         stage('Build Docker-image'){
             steps{
-                proyectoBuild(project_root:"${PROJECT_ROOT}",registry:"${REGISTRY}",buildNumber:"${BUILD_NUMBER}")
+                proyectBuild(project_root:"${PROJECT_ROOT}",registry:"${REGISTRY}",buildNumber:"${BUILD_NUMBER}")
                 echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} Paso de construir la imagen"
             }
         }
