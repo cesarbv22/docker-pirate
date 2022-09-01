@@ -208,6 +208,7 @@ pipeline{
                 //echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} DEPLOY IMAGE DOCKER"
                 // sh 'docker login'
                //  sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
+               echo "Deply en espera"
             }
         }        
     }
