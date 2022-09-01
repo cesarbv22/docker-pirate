@@ -183,7 +183,7 @@ pipeline{
             }
             steps{
                 withSonarQubeEnv('sonarqube') {
-                     escaner(homeScanner:"${scannerHome}",buildNumber:"${BUILD_NUMBER}",project_root: "${PROJECT_ROOT}" )
+                     escaneo(homeScanner:"${scannerHome}",buildNumber:"${BUILD_NUMBER}",project_root: "${PROJECT_ROOT}" )
                 }
                 timeout(time: 3, unit: 'MINUTES') {
              
