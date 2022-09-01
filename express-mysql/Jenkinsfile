@@ -10,8 +10,7 @@ automatizar login
 
 
 //PRUEBA DE SHARED LIBRARY JENKINS MY JENKINS FILE
-
-@Library("shared-library") _
+@Library("shared-library") _ //Importanción de la librería compartida, definida en las configuraciones de Jenkins
 def qualityGateValidation(qg) {
   if (qg.status != 'OK') {
     // emailext body: "WARNING SANTI: Code coverage is lower than 80% in Pipeline ${BUILD_NUMBER}", subject: 'Error Sonar Scan,   Quality Gate', to: "${EMAIL_ADDRESS}"
@@ -30,7 +29,6 @@ pipeline{
     environment {//
       PROJECT_ROOT = 'express-mysql/app'
       REGISTRY = 'cesarbv/docker-pirate-express'
- 
     }
 
     stages{ // stage 1 de ejemplo
@@ -56,15 +54,17 @@ pipeline{
         stage('Install Dependencies'){
             steps{
               echo "${PROJECT_ROOT} Instalar dependencias"
-              installDependencies(project_root: PROJECT_ROOT)// aqui iria la variable de enntorno
+              installDependencies(project_root: PROJECT_ROOT)
             }
         }
+
          stage('Unit test'){
             steps{
-                unitTest(project_root: PROJECT_ROOT)// poner la ruta en variable
+                unitTest(project_root: PROJECT_ROOT)
                 echo "${PROJECT_ROOT} Pruebas unitarias"
             }
         }
+
          stage('Generate coverage report'){
             steps{
                 coverageProject(project_root: PROJECT_ROOT)
@@ -78,32 +78,27 @@ pipeline{
             }
             steps{
                 withSonarQubeEnv('sonarqube') {
-                     escaneo(homeScanner:"${scannerHome}",buildNumber:"${BUILD_NUMBER}",project_root: "${PROJECT_ROOT}" )
+                    echo "Paso del scan"
+                    escaneo(homeScanner:"${scannerHome}",buildNumber:"${BUILD_NUMBER}",project_root: "${PROJECT_ROOT}" )
                 }
                 timeout(time: 3, unit: 'MINUTES') {
              
                     waitForQualityGate abortPipeline: qualityGateValidation(waitForQualityGate())
                 }
-                 //echo "${scannerHome}-- ${BUILD_NUMBER}--- ${PROJECT_ROOT} Scaneo"
+                
             }
         }
 
         stage('Build Docker-image'){
             steps{
                 proyectoBuild(project_root:"${PROJECT_ROOT}",registry:"${REGISTRY}",buildNumber:"${BUILD_NUMBER}")
-                // proyectoBuild(project_root: "${PROJECT_ROOT}",registry:"${REGISTRY}",buildNumber:"${BUILD_NUMBER}" )
-                echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} Build Docker IMAGE"
-                //sh 'docker login'
-                //sh "cd ./${PROJECT_ROOT};docker build -t ${REGISTRY}:${BUILD_NUMBER} . " //prueba
+                echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} Paso de construir la imagen"
             }
         }
         stage('Deploy Docker-image'){
             steps{
                 deployProject(registry:"${REGISTRY}",build_number:"${BUILD_NUMBER}")
-                echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} DEPLOY IMAGE DOCKER"
-                // sh 'docker login'
-               //  sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
-               
+                echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} Paso de hacer el pull a la imagen"
             }
         }        
     }
