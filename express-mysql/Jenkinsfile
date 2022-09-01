@@ -160,8 +160,8 @@ pipeline{
 
         stage('Install Dependencies'){
             steps{
-                installDependencies(project_root: PROJECT_ROOT)// aqui iria la variable de enntorno
-              //echo "${PROJECT_ROOT} Instalar dependencias"
+              echo "${PROJECT_ROOT} Instalar dependencias"
+              installDependencies(project_root: PROJECT_ROOT)// aqui iria la variable de enntorno
             }
         }
          stage('Unit test'){
