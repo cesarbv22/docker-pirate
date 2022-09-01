@@ -172,8 +172,8 @@ pipeline{
         }
          stage('Generate coverage report'){
             steps{
-                coverageProject(project_root: PROJECT_ROOT)
-                //echo "${PROJECT_ROOT} Run coverage"
+                //coverageProject(project_root: PROJECT_ROOT)
+                echo "${PROJECT_ROOT} Run coverage"
             }
         }
 
@@ -196,8 +196,8 @@ pipeline{
         stage('Build Docker-image'){
             steps{
                 //proyectoBuild(project_root:"${PROJECT_ROOT}",registry:"${REGISTRY}",buildNumber:"${BUILD_NUMBER}")
-                 proyectoBuild(project_root: "${PROJECT_ROOT}",registry:"${REGISTRY}",buildNumber:"${BUILD_NUMBER}" )
-               //echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} Build Docker IMAGE"
+                // proyectoBuild(project_root: "${PROJECT_ROOT}",registry:"${REGISTRY}",buildNumber:"${BUILD_NUMBER}" )
+               echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} Build Docker IMAGE"
                 //sh 'docker login'
                 //sh "cd ./${PROJECT_ROOT};docker build -t ${REGISTRY}:${BUILD_NUMBER} . " //prueba
             }
@@ -205,10 +205,10 @@ pipeline{
         stage('Deploy Docker-image'){
             steps{
                 //deployProject(project_root:"${PROJECT_ROOT}",build_number:"${BUILD_NUMBER}")
-                //echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} DEPLOY IMAGE DOCKER"
+                echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} DEPLOY IMAGE DOCKER"
                 // sh 'docker login'
                //  sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
-               echo "Deply en espera"
+               
             }
         }        
     }
