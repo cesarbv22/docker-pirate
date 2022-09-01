@@ -1,5 +1,3 @@
-
-//PRUEBA DE SHARED LIBRARY JENKINS MY JENKINS FILE
 @Library("shared-library") _ //Importanción de la librería compartida, definida en las configuraciones de Jenkins
 def qualityGateValidation(qg) {
   if (qg.status != 'OK') {
