@@ -197,6 +197,7 @@ pipeline{
             steps{
                 //buildProject(project_root:"${PROJECT_ROOT}",registry:"${REGISTRY}",build_number:"${BUILD_NUMBER}")
                //echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} Build Docker IMAGE"
+                sh 'docker login'
                 sh "cd ./${PROJECT_ROOT};docker build -t ${REGISTRY}:${BUILD_NUMBER} . " //prueba
             }
         }
