@@ -19,7 +19,7 @@ WORKDIR /usr/src
 #WORKDIR /app
 # Add dependencies for the node modules (to be installed)
 # Install node dependencies via npm
-RUN npm install && npm run rebuild && npm cache clean --force
+RUN npm install && npm run rebuild
 #RUN npm ci && npm cache clean --force 
 #RUN npm ci --only=production && npm run rebuild
 #RUN npm ci && npm run rebuild && npm cache clean --force
@@ -27,7 +27,7 @@ COPY . .
 
 #Segunda stage
 FROM ${version} as deploy
-
+RUN npm cache clean --force
 #FROM base as deploy
 # Add main app functionalities
 # COPY ["app.js", "/usr/src/"]
