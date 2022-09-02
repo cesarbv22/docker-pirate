@@ -27,7 +27,7 @@ COPY . .
 
 #Segunda stage
 FROM ${version} as deploy
-RUN npm cache clean --force
+
 #FROM base as deploy
 # Add main app functionalities
 # COPY ["app.js", "/usr/src/"]
