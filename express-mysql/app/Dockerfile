@@ -2,6 +2,7 @@
 ARG version=node:alpine
 #Stage 1 aca se define la imagen final que se usara
 FROM  ${version} as base
+ENV NODE_ENV production
 # Define default ports and host for app and db, mysql_db es el nombre del servicio en el docker compose 
 ARG app_port=3000
 ARG db_host=mysql_db
@@ -19,12 +20,12 @@ WORKDIR /usr/src
 # Add dependencies for the node modules (to be installed)
 # Install node dependencies via npm
 #RUN npm install && npm run rebuild 
-RUN npm install && npm run rebuild
+RUN npm ci --only=production && npm run rebuild
 COPY . .
 
 #Segunda stage
 FROM ${version} as deploy
-ENV NODE_ENV production
+
 #FROM base as deploy
 # Add main app functionalities
 # COPY ["app.js", "/usr/src/"]
