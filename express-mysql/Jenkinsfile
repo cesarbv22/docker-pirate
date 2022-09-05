@@ -21,9 +21,9 @@ pipeline{
     }
 
     stages{ // stage 1 de ejemplo
-        stage('example'){
+        stage('Test :D'){
             steps {
-              helloworld(day:"martes",name:"Marshall")
+              helloworld(day:"lunes",name:"Marshall")
             }
         }
 
@@ -33,7 +33,7 @@ pipeline{
             }
         }
 
-        stage('Checkout'){// este no estoy tan seguro de como adaptarlo
+        stage('Checkout'){
             steps{
               checkProject()
             }
