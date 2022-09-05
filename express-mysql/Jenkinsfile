@@ -17,6 +17,7 @@ pipeline{
     environment {// variables de entorno que se necesitan para los steps 
       PROJECT_ROOT = 'express-mysql/app'
       REGISTRY = 'cesarbv/docker-pirate-express'
+      DOCKERHUB_CREDENTIALS = credentials('cesarbv-dockerhub')// en teoria acá va el id de las credenciales creadas en jenkins, basado en dockerhub
     }
 
     stages{ // stage 1 de ejemplo
