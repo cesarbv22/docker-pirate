@@ -77,7 +77,7 @@ pipeline{
         }
 
         stage('Build Docker-image'){
-            steps{
+            steps{// ya se usa el access token generado con docker-hub y administrado ahora en jenkins
                 proyectBuild(project_root:"${PROJECT_ROOT}",registry:"${REGISTRY}",buildNumber:"${BUILD_NUMBER}")
                 echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} Paso de construir la imagen"
             }
