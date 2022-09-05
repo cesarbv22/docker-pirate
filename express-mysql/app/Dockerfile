@@ -2,7 +2,7 @@
 ARG version_base=node:alpine
 ARG version_deploy=node:lts-alpine
 #Stage 1 aca se define la imagen final que se usara
-FROM  ${version-base} as base
+FROM  ${version_base} as base
 ENV NODE_ENV production
 # Define default ports and host for app and db, mysql_db es el nombre del servicio en el docker compose 
 ARG app_port=3000
@@ -27,7 +27,7 @@ RUN npm install && npm run rebuild
 COPY . .
 
 #Segunda stage
-FROM ${version-deploy} as deploy
+FROM ${version_deploy} as deploy
 #FROM  node:lts-alpine as deploy
 #FROM base as deploy
 # Add main app functionalities
