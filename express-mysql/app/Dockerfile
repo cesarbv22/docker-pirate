@@ -28,16 +28,7 @@ COPY . .
 
 #Segunda stage
 FROM ${version_deploy} as deploy
-#FROM  node:lts-alpine as deploy
-#FROM base as deploy
-# Add main app functionalities
-# COPY ["app.js", "/usr/src/"]
-# COPY ["./config/db.config.js", "/usr/src/config/"]
-# COPY ["./db/model.js", "/usr/src/db/"]
-# COPY ["./routes/developers.js", "/usr/src/routes/"]
 COPY . . 
-# hacer de aqui en adelante en otra stage
 EXPOSE ${app_port}
-
 CMD ["node", "app.js"] 
 #docker-compose up --build se usa en la ruta de express-mysql
