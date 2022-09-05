@@ -1,6 +1,6 @@
 #Version de la imagen que se usa
-ARG version-base=node:alpine
-ARG version-deploy=node:lts-alpine
+ARG version_base=node:alpine
+ARG version_deploy=node:lts-alpine
 #Stage 1 aca se define la imagen final que se usara
 FROM  ${version-base} as base
 ENV NODE_ENV production
