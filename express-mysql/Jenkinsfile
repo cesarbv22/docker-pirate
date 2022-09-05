@@ -35,7 +35,7 @@ pipeline{
 
         stage('Checkout'){// este no estoy tan seguro de como adaptarlo
             steps{
-              checkProject(type:'GitSCM',branchs:'*/main',repo:'https://github.com/cesarbv22/docker-pirate')
+              checkProject()
             }
         }
 
