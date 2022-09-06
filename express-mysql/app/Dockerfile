@@ -3,7 +3,7 @@ ARG version_base=node:alpine
 ARG version_deploy=node:lts-alpine
 #Stage 1 aca se define la imagen final que se usara
 FROM  ${version_base} as base
-ARG NODE_ENV = development
+ARG node_env = development
 # Define default ports and host for app and db, mysql_db es el nombre del servicio en el docker compose 
 ARG app_port=3000
 ARG db_host=mysql_db
@@ -13,7 +13,7 @@ ENV APP_PORT=${app_port}
 ENV DB_HOST=${db_host}
 ENV DB_PORT=${db_port}
 #ENV IMAGE_VERSION = ${version}
-ENV NODE_ENV = ${NODE_ENV}
+ENV NODE_ENV = ${node_env}
 COPY package*.json ./
 # Specify working directory for the container
 WORKDIR /usr/src
