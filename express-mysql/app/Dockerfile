@@ -13,7 +13,7 @@ ENV APP_PORT=${app_port}
 ENV DB_HOST=${db_host}
 ENV DB_PORT=${db_port}
 #ENV IMAGE_VERSION = ${version}
-ENV NODE_ENV = ${node_env}
+#ENV NODE_ENV = ${node_env}
 COPY package*.json ./
 # Specify working directory for the container
 WORKDIR /usr/src
