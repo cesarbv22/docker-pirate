@@ -3,7 +3,8 @@ version: "3.8"
 services:
   express_rest_api:
     container_name: my_express_rest_api
-    image: san99tiago/docker-pirate-express
+    #image: san99tiago/docker-pirate-express
+    image: cesarbv/docker-pirate-express
     environment:
       - DB_PORT=3306
       - DB_HOST=mysql_db

@@ -17,7 +17,7 @@ ENV imageVersion = ${version}
 COPY package*.json ./
 # Specify working directory for the container
 WORKDIR /usr/src
-#WORKDIR /app
+#WORKDIR /usr/src/app
 # Add dependencies for the node modules (to be installed)
 # Install node dependencies via npm
 RUN npm install && npm run rebuild
