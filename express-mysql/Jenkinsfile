@@ -14,10 +14,10 @@ pipeline{
         nodejs 'nodejs'
     }//forma de utilizar el plugin de nodeJs en el pipeline. Este nombre 'nodejs' es el configurado en jenkins
 
-    environment {// variables de entorno que se necesitan para los steps 
-      PROJECT_ROOT = 'express-mysql/app' //root donde esta mi aplicacion
-      REGISTRY = 'cesarbv/docker-pirate-express' // usuarioDocker/nombreImagen
-      DOCKERHUB_CREDENTIALS = credentials('cesarbv-dockerhub')// en teoria acá va el id de las credenciales creadas en jenkins, basado en dockerhub
+    environment {
+      PROJECT_ROOT = 'express-mysql/app' 
+      REGISTRY = 'cesarbv/docker-pirate-express' 
+      DOCKERHUB_CREDENTIALS = credentials('cesarbv-dockerhub')
     }
     /*   ESTRUCTURA DE LAS IMAGENES EN SU NOMBRE 
       RegistryName/folderName/NFolderName/imageName:tag
