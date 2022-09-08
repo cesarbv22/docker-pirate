@@ -34,18 +34,21 @@ pipeline{
 
         stage('Test :D'){
             steps {
+                  echo "Test"
              // helloworld(day:"lunes",name:"Marshall")
             }
         }
 
          stage('Connection Test Hello Def'){
             steps {
+                echo "Test"
             //  hello()
             }
         }
 
         stage('Checkout'){
             steps{
+                  echo "Test"
             //  checkProject()
             }
         }
