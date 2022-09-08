@@ -25,12 +25,12 @@ pipeline{
 
     stages{ // stage 1 de ejemplo
 
-       stage('Login '){
-            steps {
-             //sh 'docker login'
-             sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-            }
-        }
+      stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
 
         stage('Test :D'){
             steps {
