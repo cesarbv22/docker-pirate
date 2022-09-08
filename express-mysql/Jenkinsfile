@@ -88,7 +88,6 @@ pipeline{
         }
         stage('Deploy Docker-image'){
             steps{
-                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 deployProject(registry:"${REGISTRY}",build_number:"${BUILD_NUMBER}")
                 echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} PULL IMAGEN"
             }
