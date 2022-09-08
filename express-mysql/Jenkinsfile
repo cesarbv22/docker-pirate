@@ -25,51 +25,45 @@ pipeline{
 
     stages{ // stage 1 de ejemplo
 
-      stage('Login') {
-
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
-		}
-
+    
         stage('Test :D'){
             steps {
                   echo "Test"
-             // helloworld(day:"lunes",name:"Marshall")
+              helloworld(day:"lunes",name:"Marshall")
             }
         }
 
          stage('Connection Test Hello Def'){
             steps {
                 echo "Test"
-            //  hello()
+              hello()
             }
         }
 
         stage('Checkout'){
             steps{
                   echo "Test"
-            //  checkProject()
+              checkProject()
             }
         }
 
         stage('Install Dependencies'){
             steps{
               echo "${PROJECT_ROOT} Instalar dependencias"
-             // installDependencies(project_root: PROJECT_ROOT)
+              installDependencies(project_root: PROJECT_ROOT)
             }
         }
 
          stage('Unit test'){
             steps{
-              //  unitTest(project_root: PROJECT_ROOT)
+                unitTest(project_root: PROJECT_ROOT)
                 echo "${PROJECT_ROOT} Pruebas unitarias"
             }
         }
 
          stage('Generate coverage report'){
             steps{
-              //  coverageProject(project_root: PROJECT_ROOT)
+                coverageProject(project_root: PROJECT_ROOT)
                 echo "${PROJECT_ROOT} Run coverage"
             }
         }
@@ -81,7 +75,7 @@ pipeline{
             steps{
                 withSonarQubeEnv('sonarqube') {
                     echo "Paso del scan"
-                  //  escaneo(homeScanner:"${scannerHome}",buildNumber:"${BUILD_NUMBER}",project_root: "${PROJECT_ROOT}" )
+                    escaneo(homeScanner:"${scannerHome}",buildNumber:"${BUILD_NUMBER}",project_root: "${PROJECT_ROOT}" )
                 }
                 timeout(time: 3, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: qualityGateValidation(waitForQualityGate())
@@ -92,13 +86,13 @@ pipeline{
 
         stage('Build Docker-image'){
             steps{// ya se usa el access token generado con docker-hub y administrado ahora en jenkins
-              //  proyectBuild(project_root:"${PROJECT_ROOT}",registry:"${REGISTRY}",buildNumber:"${BUILD_NUMBER}")
+                proyectBuild(project_root:"${PROJECT_ROOT}",registry:"${REGISTRY}",buildNumber:"${BUILD_NUMBER}")
                 echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} CONSTRUIR LA IMAGEN"
             }
         }
         stage('Deploy Docker-image'){
             steps{
-              //  deployProject(registry:"${REGISTRY}",build_number:"${BUILD_NUMBER}")
+                deployProject(registry:"${REGISTRY}",build_number:"${BUILD_NUMBER}")
                 echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} PULL IMAGEN"
             }
         }        
