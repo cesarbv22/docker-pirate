@@ -95,10 +95,18 @@ pipeline{
                 deployProject(registry:"${REGISTRY}",build_number:"${BUILD_NUMBER}")
                 echo "${PROJECT_ROOT}-- ${REGISTRY}-- ${BUILD_NUMBER} PULL IMAGEN"
             }
-        }        
+        } 
+
+        stage ('Image Deploy in my Premise- TEST'){
+            steps{
+                echo "Prueba crear container en pipeline"
+                sh "docker run -it -d -p 3001:3000 --name plTest cesarbv/docker-pirate-express:46"
+            }
+        }       
     }
 }
 /*
 docker run -it -d -p 3001:3000 --name prueba-corregida 1e249
+docker run -it -d -p 3001:3000 --name TESTO cesarbv/docker-pirate-express:46
 */
 
