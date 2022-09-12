@@ -33,7 +33,7 @@ pipeline{
 
          stage('Connection Test Hello Def'){
             steps {
-                echo "Test"
+              echo "Test"
               hello()
             }
         }
@@ -47,22 +47,23 @@ pipeline{
 
         stage('Install Dependencies'){
             steps{
-              echo "${PROJECT_ROOT} Instalar dependencias"
+             
               installDependencies(project_root: PROJECT_ROOT)
+              echo "Instalación de dependencias en: ${PROJECT_ROOT}"
             }
         }
 
          stage('Unit test'){
             steps{
                 unitTest(project_root: PROJECT_ROOT)
-                echo "${PROJECT_ROOT} Pruebas unitarias"
+                echo "Pruebas unitarias: ${PROJECT_ROOT}"
             }
         }
 
          stage('Generate coverage report'){
             steps{
                 coverageProject(project_root: PROJECT_ROOT)
-                echo "${PROJECT_ROOT} Run coverage"
+                echo "Run coverage: ${PROJECT_ROOT}"
             }
         }
 
@@ -71,9 +72,9 @@ pipeline{
                 scannerHome = tool 'sonar-scanner' //sonar-scanner es el nombre que se puso cuando se configuró el plugin en jenkins
             }
             steps{
-                withSonarQubeEnv('sonarqube') {
-                    echo "Paso del scan"
+                withSonarQubeEnv('sonarqube') {  
                     escaneo(homeScanner:"${scannerHome}",buildNumber:"${BUILD_NUMBER}",project_root: "${PROJECT_ROOT}" )
+                    echo "Scaner STEP"
                 }
                 timeout(time: 3, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: qualityGateValidation(waitForQualityGate())
