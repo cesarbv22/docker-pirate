@@ -26,7 +26,6 @@ pipeline{
 
     stages{ // stage 1 de ejemplo
 
-    
         stage('Test :D'){
             steps {
                   echo "Test"
