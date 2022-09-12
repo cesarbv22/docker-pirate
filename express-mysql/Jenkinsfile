@@ -102,7 +102,7 @@ pipeline{
             steps{
                 echo "Prueba crear container en pipeline"
                // createContainer(name:"pl-cnt-${BUILD_NUMBER}",registry:"${REGISTRY}",build_number:"${BUILD_NUMBER}")
-                sh "docker run -d --rm -p 3001:3000 --name plTest  ${REGISTRY}:${BUILD_NUMBER}"
+                sh "docker run -it -d --rm -p 3001:3000 --name plTest  ${REGISTRY}:${BUILD_NUMBER}"
                // sh "docker run --rm -p 3001:3000 --name pl-cnt ${REGISTRY}:${BUILD_NUMBER}"
             }
         }       
