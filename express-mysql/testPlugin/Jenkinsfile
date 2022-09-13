@@ -60,17 +60,17 @@ pipeline {
           steps {
             // "sonarqube" is the server configured in "Configure System"
             withSonarQubeEnv('sonarqube') {// sonarqube, es el nombre del sonarqube server que se configuró
-              // Execute the SonarQube scanner with desired flags
-              sh "${scannerHome}/bin/sonar-scanner \
-                          -Dsonar.projectKey=SimpleExpressExample:Test \
-                          -Dsonar.projectName=SimpleExpressExample \
-                          -Dsonar.projectVersion=0.0.${BUILD_NUMBER} \
-                          -Dsonar.host.url=http://mysonarqube:8888 \
-                          -Dsonar.sources=./${PROJECT_ROOT}/app.js,./${PROJECT_ROOT}/config/db.config.js,./${PROJECT_ROOT}/routes/developers.js \
-                          -Dsonar.login=admin \
-                          -Dsonar.password=prueba8080 \
-                          -Dsonar.tests=./${PROJECT_ROOT}/test \
-                          -Dsonar.javascript.lcov.reportPaths=./${PROJECT_ROOT}/coverage/lcov.info"
+             echo 'ESCANER' 
+              // sh "${scannerHome}/bin/sonar-scanner \
+              //             -Dsonar.projectKey=SimpleExpressExample:Test \
+              //             -Dsonar.projectName=SimpleExpressExample \
+              //             -Dsonar.projectVersion=0.0.${BUILD_NUMBER} \
+              //             -Dsonar.host.url=http://mysonarqube:8888 \
+              //             -Dsonar.sources=./${PROJECT_ROOT}/app.js,./${PROJECT_ROOT}/config/db.config.js,./${PROJECT_ROOT}/routes/developers.js \
+              //             -Dsonar.login=admin \
+              //             -Dsonar.password=prueba8080 \
+              //             -Dsonar.tests=./${PROJECT_ROOT}/test \
+              //             -Dsonar.javascript.lcov.reportPaths=./${PROJECT_ROOT}/coverage/lcov.info"
             }
             timeout(time: 3, unit: 'MINUTES') {
               // In case of SonarQube failure or direct timeout exceed, stop Pipeline
